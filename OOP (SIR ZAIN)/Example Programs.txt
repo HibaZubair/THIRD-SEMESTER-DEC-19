@@ -1,0 +1,379 @@
+-- Constructors --
+
+#include <iostream>
+using namespace std;
+
+
+class Example
+{
+	int id;
+	string name;
+	
+	public:
+		
+	// Default cconstructor. Compiler provides one if you don't define any
+	Example()
+	{
+		cin >> id;
+		cin >> name;
+	}
+	
+	// Constructors with 2 parameters
+	Example(string name, int id)
+	{
+		this->id = id;
+		this->name = name;
+	}
+	
+	// Constructor with just 1 parameter
+	Example(int id)
+	{
+		this->id = id;
+		name = "Ali";
+	}
+	
+	// You can define more constructors if you want...
+	
+};
+
+
+int main()
+{
+	Example e1;  				// constructs object through first constructor
+	Example e2("Ahmed", 100); 		// constructs object through second constructor
+	Example e3(101);  			// constructs object through third constructor
+}
+
+
+
+
+
+--- Member Initialization List --
+
+#include <iostream>
+using namespace std;
+
+
+class Example
+{
+	int id;
+	string name;
+	
+	public:
+
+	
+	Example(string name, int id): id(id), name(name)
+	{
+	}
+	
+	void show()
+	{
+		cout << "Name:\t" << name << endl;
+		cout << "ID:\t" << id << endl;
+	}
+	
+};
+
+
+int main()
+{
+	Example e2("Ahmed", 100);
+	e2.show();
+}
+
+
+--- Destructor ---
+
+#include <iostream>
+using namespace std;
+
+
+class Example
+{
+	int id;
+	string name;
+	
+	public:
+
+	
+	Example(string name, int id): id(id), name(name)
+	{
+	}
+	
+	void show()
+	{
+		cout << "Name:\t" << name << endl;
+		cout << "ID:\t" << id << endl;
+	}
+	
+	~Example()
+	{
+		// Destructor takes no parameters
+		// There can be ONLY ONE destructor of a class
+		// Destructors are not called explicitly. They are called when scope of an object (in which it is declared) ends
+		
+		cout << "This object is about to get into the garbage can!" << endl;
+	}
+};
+
+
+int main()
+{
+	Example e1("Ahmed", 100);
+	Example e2("Ali", 101);
+}	// Destructor is called at this point. When scope of an object ends
+
+
+
+--- POinters ---
+
+#include <iostream>
+using namespace std;
+
+void add(void* x, void* y, char type)
+{
+	if(type == 'i')
+	{
+		int * iX = (int*) x;
+		int * iY = (int*) y;
+		cout << "Result : " << (*iX + *iY) << endl;
+	}
+	else
+	{
+		float * fX = (float*) x;
+		float * fY = (float*) y;
+		cout << "Result : " << (*fX + *fY) << endl;
+	}
+		
+}
+
+
+int main()
+{
+	// variable
+	int a = 10;
+	cout << "a : " << a << endl;
+	
+	// single pointer
+	int * p1 = &a;
+	cout << "*p1 : " << *p1 << endl;
+	
+	// double pointer
+	int ** p2 = &p1;
+	cout << "**p2 : " << **p2 << endl;
+	
+	// void pointer
+	int i1 = 2, i2 = 3;
+	float f1 = 2.5, f2 = 3.0;
+	
+	
+	// calling with integer pointers
+	int * ip1 = &i1;
+	int * ip2 = &i2;
+	add(ip1, ip2, 'i');
+	
+	// calling with float pointers
+	float * fp1 = &f1;
+	float * fp2 = &f2;
+	add(fp1, fp2, 'f');
+	
+	
+	// pointers with arrays
+	int arr[] = {1, 2, 3, 4, 5};
+	int * pArr = arr;
+	cout << "*pArr : " << *pArr << endl;
+	pArr++;
+	cout  << "*pArr now : " << *pArr << endl;
+	
+	
+}
+
+
+--- CONST data members ---
+
+
+#include <iostream>
+using namespace std;
+
+
+class Example
+{
+	const int id  = 100;
+	const int age;		//  can only be initialized through member initialization list OR here in the declaration
+	string name;
+	
+	public:
+
+	
+	Example(string name, int age): age(age)
+	{
+		this->name = name;
+	}
+	
+	void show()
+	{
+		cout << "Name:\t" << name << endl;
+		cout << "ID:\t" << id << endl;
+		cout << "Age:\t" << age << endl;
+	}
+	
+};
+
+
+int main()
+{
+	Example e1("Ahmed", 25);
+	e1.show();
+}
+
+
+--- CONST function and CONST parameters ---
+
+#include <iostream>
+using namespace std;
+
+
+class Example
+{
+	
+	 int id  = 100;
+	 int age;		//  can only be initialized through member initialization list OR here in the declaration
+	string name;
+	
+	public:
+
+	
+	Example(string name, int age): age(age)
+	{
+		this->name = name;
+	}
+	
+	// This function cannot change value of any variable of this class now (but it can still display or return that variable)
+	void show() const
+	{
+		cout << "Name:\t" << name << endl;
+		cout << "ID:\t" << id << endl;
+		cout << "Age:\t" << age << endl;
+	}
+	
+	void func(int i, const int j)
+	{
+		// This function can change the value of parameter i but cannot change value or parameter j
+		// It can however, still display or return value of both these variables
+		
+		cout << i << endl;
+		cout << j << endl;
+	}
+	
+};
+
+
+int main()
+{
+	Example e1("Ahmed", 25);
+	e1.show();
+	
+	e1.func(5, 10);
+}
+
+
+--- CONST objects & MUTABLE variables ---
+
+
+#include <iostream>
+using namespace std;
+
+
+class Example
+{
+	
+	mutable int id;
+	int age;
+	string name;
+	
+	public:
+
+	
+	Example(string name, int age, int id)
+	{
+		this->name = name;
+		this->age = age;
+		this->id = id;
+	}
+	
+	// This function cannot change value of any variable of this class unless that variable is MUTABLE
+	void show() const
+	{
+		cout << "Name:\t" << name << endl;
+		id = 500;
+		cout << "ID:\t" << id << endl;
+		cout << "Age:\t" << age << endl;
+	}
+
+};
+
+
+int main()
+{
+	Example e1("Ahmed", 25, 400);
+	e1.show();
+	
+	const Example e2("Ali", 28, 450); // This object can only call constant functions of this class
+}
+
+
+
+--- CONST with pointers ---
+
+
+CASE 1: Non const data (variable) with non const pointer
+
+int main()
+{
+	int i = 10;
+	int j = 20;
+	
+	int * iP = &i;
+
+}
+
+CASE 2: const data with non const pointer
+
+
+int main()
+{
+	int i = 10;
+	int j = 20;
+	
+	const int * iP = &i;
+	// *iP = 50; NOT OK! cannot change value by dereferencing now
+	iP = &j; // OK
+}
+
+
+CASE 3: non const data with const pointer
+
+
+int main()
+{
+	int i = 10;
+	int j = 20;
+	
+	int * const iP = &i;
+	*iP = 50; //OK
+	//iP = &j; // NOT  OK: cannot point to any other variable now
+}
+
+
+CASE 4: const data with const pointer
+
+
+int main()
+{
+	int i = 10;
+	int j = 20;
+	
+	const int * const iP = &i;
+	// *iP = 50; // NOT OK: cannot change value by dereferencing
+	//iP = &j; // NOT  OK: cannot point to any other variable now
+}

@@ -1,0 +1,189 @@
+
+---------------task 1-----------------------
+
+  Include Irvine32.inc
+.data
+Str1 BYTE '127&j~3#^&*#*#45^',0
+var BYTE 0
+.code
+main PROC
+mov edi,OFFSET Str1
+mov al,'#'
+mov ecx,LENGTHOF Str1
+cld
+repne scasb
+
+sub edi,offset str1
+mov eax,edi
+call writeint
+
+
+exit
+main ENDP
+end main
+
+----------task 2 frequnecy of s--------------
+
+Include Irvine32.inc
+.data
+Str1 BYTE '1s27&sjs~s3#^&*#*#45^',0
+var BYTE 0
+.code
+main PROC
+mov eax,0
+mov edi,OFFSET Str1
+mov al,'s'
+mov ecx,LENGTHOF Str1
+cld
+L1:
+repne scasb
+jnz quit
+
+quit:
+add var,1
+cmp ecx,0
+jne l1
+mov al,var
+call writedec
+
+
+exit
+main ENDP
+end main
+-------------task 2 with invoke----------------------------
+Include Irvine32.inc
+.data
+Str1 BYTE '127&j~3#^&*#*#45^',0
+var BYTE 0
+search PROto,a:dword,b:dword
+.code
+
+main PROC
+
+invoke search,lengthof str1,offset str1
+sub edi,offset str1
+mov eax,edi
+call writeint
+exit
+main ENDP
+
+search PROC,a:dword,b:dword
+
+mov edi,b
+mov al,'1'
+mov ecx,a
+cld
+repne scasb
+jnz quit
+quit:
+
+ret 
+search ENDP
+
+end main
+------------task 2 with normal function calling-----------------------------
+Include Irvine32.inc
+.data
+Str1 BYTE '127&j~3#^&*#*#45^',0
+var BYTE 0
+.code
+main PROC
+push LENGTHOF str1
+push offset Str1
+call search
+sub edi,offset str1
+mov eax,edi
+call writeint
+exit
+main ENDP
+
+search PROC
+push ebp
+mov ebp,esp
+mov edi,[ebp+8]
+mov ecx,[ebp+12]
+mov al,'&'
+cld
+repne scasb
+jnz quit
+
+quit:
+pop ebp
+ret 8
+search ENDP
+
+end main
+------------task 3-----------------------
+Include Irvine32.inc
+.data
+str2 BYTE 'strIng',0
+str1 BYTE 'string',0
+var BYTE 0
+compare PROTO,a:dword,b:dword,c1:dword,d:BYTE
+.code
+main PROC
+mov eax,0
+INVOKE compare, OFFSET str2, OFFSET str1, LENGTHOF str2, var
+
+call writeint
+exit
+main ENDP
+
+compare PROC, a:dword,b:dword,c1:dword,d:BYTE
+mov esi,a
+mov edi, b 
+mov ecx,c1
+mov bl,d
+
+l3:
+cld
+cmpsb
+je l2
+jmp l1
+
+l2:
+INC bl
+mov al,bl
+call writeint
+dec ecx
+cmp ecx,1
+jne l3
+
+l1:
+mov al,bl
+ret
+compare ENDP
+end main
+mov ecx,[ebp+12]
+cld
+repne scasb
+jnz quit
+quit:
+pop ebp
+ret 8
+search ENDP
+end main
+------------------------task 4----------------------
+Include Irvine32.inc
+.data
+str2 BYTE 'hibazubair',0
+str1 BYTE 'string',0
+move PROTO,a:dword,b:dword,c1:dword
+.code
+main PROC
+mov eax,0
+INVOKE move, OFFSET str2, OFFSET str1, LENGTHOF str2
+mov edx,OFFSET str1
+call writestring
+exit
+main ENDP
+
+move PROC, a:dword,b:dword,c1:dword
+mov esi,a
+mov edi, b 
+mov ecx,c1
+cld
+rep movsb
+ret
+move ENDP
+end main

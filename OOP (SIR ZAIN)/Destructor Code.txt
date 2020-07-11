@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+class A
+{
+	int objectID;
+	
+	public:
+	A(int objectID)
+	{
+	this->objectID = objectID; 
+	}
+	
+	~A()
+	{
+		cout << "Object: " << objectID << "removed" << endl;
+	}
+};
+
+
+int main()
+{
+	A a1(1);
+	A a2(2);
+	A a3(3);
+	
+}
+
+
+
+
+
+
