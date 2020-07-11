@@ -1,0 +1,3 @@
+WRITTEN IN FILE: hiba
+
+Length of string: 4
