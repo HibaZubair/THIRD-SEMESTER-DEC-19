@@ -1,0 +1,144 @@
+HOME ASSIGNMENT
+TASK 1:-
+
+TITLE task1 (Test.asm)
+INCLUDE Irvine32.inc
+.data
+a BYTE 5
+b BYTE 6
+c BYTE 0
+.code
+main PROC
+mov ecx,5
+mov al, a
+mov bl, b
+L1:
+  add bl, c
+add bl, bl
+add al, c
+add al, al
+Loop L1
+mov ah, al
+mov bh, bl
+call writeint
+exit
+main ENDP
+END main
+
+Task2:-
+
+TITLE task2 (Test.asm)
+INCLUDE Irvine32.inc
+.data
+a BYTE 5h
+b BYTE 0h
+var BYTE ? 
+.code
+main PROC
+mov ecx 5
+mov al,0
+L1:
+   INC b
+   DEC a
+   mov dl, a
+   mov dh, b
+   mov edx, ecx
+   mov ecx,10
+   L2:
+   INC b,2
+   mov al, b
+   mov var, al
+   Loop L2
+   mov ecx, edx
+Loop L1
+  call DumpRegs
+exit
+main ENDP
+END main
+
+Task 3
+
+TITLE task3 (test.asm)
+INCLUDE Irvine32.inc
+.data
+a BYTE 10
+b BYTE 30
+var BYTE 1
+.code
+main PROC
+   mov ecx 5
+   mov al, a
+   mov dl,a
+   mov ah, var
+L1:
+  add al, b
+  mov edx, ecx
+  mov ecx, 10
+  L2:
+  DEC dl
+  add ah, 9
+  Loop2
+  mov ecx,edx
+  Loop 1
+call DumpRegs
+exit
+main ENDP
+END main
+
+Task 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
